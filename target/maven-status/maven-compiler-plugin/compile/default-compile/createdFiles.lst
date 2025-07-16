@@ -1,0 +1,12 @@
+com/trupper/test/trupper_test/service/OrdenesService.class
+com/trupper/test/trupper_test/entity/Sucursales.class
+com/trupper/test/trupper_test/repository/OrdenesRepository.class
+com/trupper/test/trupper_test/entity/Ordenes$OrdenesBuilder.class
+com/trupper/test/trupper_test/entity/Sucursales$SucursalesBuilder.class
+com/trupper/test/trupper_test/controller/OrdenesController.class
+com/trupper/test/trupper_test/entity/Productos.class
+com/trupper/test/trupper_test/dto/RequestProductoTDO.class
+com/trupper/test/trupper_test/dto/ProductosTDO.class
+com/trupper/test/trupper_test/entity/Ordenes.class
+com/trupper/test/trupper_test/TrupperTestApplication.class
+com/trupper/test/trupper_test/entity/Productos$ProductosBuilder.class

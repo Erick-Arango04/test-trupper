@@ -1,0 +1,9 @@
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/TrupperTestApplication.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/controller/OrdenesController.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/dto/ProductosTDO.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/dto/RequestProductoTDO.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/entity/Ordenes.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/entity/Productos.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/entity/Sucursales.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/repository/OrdenesRepository.java
+/Users/erick_arango/Downloads/test-trupper/src/main/java/com/trupper/test/trupper_test/service/OrdenesService.java
