@@ -1,5 +1,8 @@
 Adjunto Coleccion Postman para su revision
-trupper.postman_collection.json *
+
+trupper.postman_collection.json 
+
+
 Orden de ejecución
 
 Register
