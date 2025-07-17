@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "51f2dbcb-f5cd-4621-9542-67bb7db7d24f",
+		"name": "trupper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16918125"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"firstName\":\"erick\",\n     \"lastName\":\"arango\",\n     \"email\":\"eriar123@gmail.com\",\n    \"password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/v1/trupper/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"v1",
+						"trupper",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n     \"email\":\"eriar123@gmail.com\",\n    \"password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/v1/trupper/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"v1",
+						"trupper",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlcmlhcjEyM0BnbWFpbC5jb20iLCJpYXQiOjE3NTI3MzA0OTksImV4cCI6MTc1MjczMTkzOX0.jvsjdGAqSlGWm0HPJ_WUHHZ48WEU5meBwk-TUCNDL6o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trupper/orden/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trupper",
+						"orden",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlcmlhcjEyM0BnbWFpbC5jb20iLCJpYXQiOjE3NTI3MzA0OTksImV4cCI6MTc1MjczMTkzOX0.jvsjdGAqSlGWm0HPJ_WUHHZ48WEU5meBwk-TUCNDL6o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"codigo\": \"17193\",\n    \"descripcion\": \"Pala Redonda\",\n    \"precio\": 99.99\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trupper/producto/17193",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trupper",
+						"producto",
+						"17193"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlcmlhcjEyM0BnbWFpbC5jb20iLCJpYXQiOjE3NTI3MzA0OTksImV4cCI6MTc1MjczMTkzOX0.jvsjdGAqSlGWm0HPJ_WUHHZ48WEU5meBwk-TUCNDL6o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sucursal\": 1,\n    \"productos\": [\n        {\n            \"codigo\": \"18156\",\n            \"descripcion\": \"Esmeriladora angular\",\n            \"precio\": 625.00\n        },\n        {\n            \"codigo\": \"17193\",\n            \"descripcion\": \"Pala Redonda\",\n            \"precio\": 100.50\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trupper/orden",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trupper",
+						"orden"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
