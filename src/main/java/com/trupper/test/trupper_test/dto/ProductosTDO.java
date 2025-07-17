@@ -1,4 +1,16 @@
 package com.trupper.test.trupper_test.dto;
 
-public record ProductosTDO ( String codigo,String descripcion,Double precio){
+
+import jakarta.validation.constraints.NotEmpty;
+import lombok.NonNull;
+import org.springframework.validation.annotation.Validated;
+
+public record ProductosTDO (
+        @NonNull
+        @NotEmpty String codigo,
+
+        @NonNull
+        @NotEmpty String descripcion,
+
+        @NonNull Double precio){
 }

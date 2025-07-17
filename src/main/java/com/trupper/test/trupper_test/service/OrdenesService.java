@@ -1,63 +1,98 @@
 package com.trupper.test.trupper_test.service;
 
-import com.trupper.test.trupper_test.dto.ProductosTDO;
-import com.trupper.test.trupper_test.dto.RequestProductoTDO;
-import com.trupper.test.trupper_test.dto.RespuestaGeneral;
-import com.trupper.test.trupper_test.entity.Productos;
-import com.trupper.test.trupper_test.exception.ProductoNoEncontrado;
+import com.trupper.test.trupper_test.dto.*;
+import com.trupper.test.trupper_test.entity.Orden;
+import com.trupper.test.trupper_test.entity.Producto;
+import com.trupper.test.trupper_test.entity.Sucursal;
+import com.trupper.test.trupper_test.exception.OrdenNoExistente;
+import com.trupper.test.trupper_test.exception.SucursalNoEncontrada;
 import com.trupper.test.trupper_test.repository.OrdenesRepository;
-import com.trupper.test.trupper_test.repository.ProductosRepository;
+import com.trupper.test.trupper_test.repository.SucursalesRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
+@RequiredArgsConstructor
 public class OrdenesService {
 
     private final OrdenesRepository ordenesRepository;
-    private final ProductosRepository productosRepository;
-
-    public OrdenesService(OrdenesRepository ordenesRepository, ProductosRepository productosRepository) {
-        this.ordenesRepository = ordenesRepository;
-        this.productosRepository = productosRepository;
-    }
-
-    public ResponseEntity<RespuestaGeneral> crearOrden(RequestProductoTDO requestProductoTDO) {
-
-        var listProducts = requestProductoTDO.productos().stream().map(productosTDO -> new Productos
-                (null, requestProductoTDO.ordenId(),
-                        productosTDO.codigo(), productosTDO.descripcion(), productosTDO.precio())).toList();
+    private final SucursalesRepository sucursalesRepository;
 
 
-        productosRepository.saveAll(listProducts);
+    public ResponseEntity<RespuestaGeneralTDO> crearOrden(RequestProductoTDO requestProductoTDO) {
 
+        var sucursal = getSucursal(requestProductoTDO);
 
-        return ResponseEntity.ok(null);
+        var orden = crearOrdenEntity(requestProductoTDO, sucursal);
+        this.ordenesRepository.save(orden);
+
+        var responseOrdenTDO = new ResponseOrdenTDO(sucursal.getNombre(), orden.getId(), requestProductoTDO.productos());
+        var response = new RespuestaGeneralTDO(HttpStatus.OK.value(), "Operacion Exitosa", responseOrdenTDO);
+
+        return ResponseEntity.ok(response);
     }
 
 
+    public ResponseEntity<RespuestaGeneralTDO> obtenerOrden(Integer idOrder) {
 
-    public ResponseEntity<RespuestaGeneral> obtenerOrden(Integer idOrder) {
+        var orden = buscarOrden(idOrder);
 
-      return null;
+        var listProductsTdo = orden.getProductos().stream()
+                .map(p ->
+                        new ProductosTDO(p.getCodigo(), p.getDescripcion(), p.getPrecio())).toList();
 
-    }
+        var orderTdo = new OrdenTDO(
+                orden.getId(),
+                orden.getSucursal().getNombre(),
+                listProductsTdo,
+                orden.getTotal()
+                ,orden.getFecha());
 
-
-    public ResponseEntity<RespuestaGeneral> actualizarOrden(String codigo, ProductosTDO productosTDO) {
-
-       var product = this.productosRepository.findByCodigo(codigo)
-               .orElseThrow(() -> new ProductoNoEncontrado("Producto no encontrado"));
-
-       product.setCodigo(productosTDO.codigo());
-       product.setDescripcion(productosTDO.descripcion());
-       product.setPrecio(productosTDO.precio());
-
-       this.productosRepository.save(product);
-        var response = new RespuestaGeneral(HttpStatus.OK.value(),"Operacion Exitosa",product);
+        var response = new RespuestaGeneralTDO(HttpStatus.OK.value(), "Operacion Exitosa", orderTdo);
 
         return ResponseEntity.ok(response);
 
     }
+
+
+
+    private Orden crearOrdenEntity(RequestProductoTDO requestProductoTDO, Sucursal sucursal) {
+
+        var listaProductos = requestProductoTDO.productos().stream()
+                .map(productosTDO ->
+                        Producto.builder()
+                                .codigo(productosTDO.codigo())
+                                .descripcion(productosTDO.descripcion())
+                                .precio(productosTDO.precio()).build())
+                .toList();
+
+        var total = listaProductos.stream().mapToDouble(Producto::getPrecio).sum();
+
+        var orden = Orden.builder()
+                .fecha(new Date())
+                .total(total)
+                .sucursal(sucursal)
+                .build();
+
+        orden.agregarProductos(listaProductos);
+
+        return orden;
+    }
+
+
+    private Sucursal getSucursal(RequestProductoTDO requestProductoTDO) {
+        return sucursalesRepository.findById(requestProductoTDO.sucursal())
+                .orElseThrow(() -> new SucursalNoEncontrada("Sucursal No Existente"));
+    }
+
+    private Orden buscarOrden(Integer idOrder) {
+        return this.ordenesRepository.findById(idOrder)
+                .orElseThrow(() -> new OrdenNoExistente("La Orden No Existe"));
+    }
+
 
 }
